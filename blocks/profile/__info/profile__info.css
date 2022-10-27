@@ -1,0 +1,10 @@
+.profile__info {
+  display: grid;
+  align-content: center;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: repeat(2, auto);
+  grid-template-areas:
+  "profile__name profile__edit-button"
+  "profile__about profile__about";
+  gap: 16px 18px;
+}
