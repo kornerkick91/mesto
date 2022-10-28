@@ -10,3 +10,16 @@
   overflow: hidden;
   grid-area: profile__name;
 }
+
+@media screen and (max-width: 768px) {
+  .profile__name {
+    font-size: 27px;
+    line-height: 33px;
+  }
+}
+
+@media screen and (max-width: 560px) {
+  .profile__name {
+    text-align: center;
+  }
+}
