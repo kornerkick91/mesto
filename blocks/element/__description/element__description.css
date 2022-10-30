@@ -1,6 +1,6 @@
 .element__description {
   margin: 24px auto 23px;
-  max-width: 242px;
+  max-width: calc(100% - 41px);
   display: flex;
   justify-content: space-between;
 }
