@@ -9,6 +9,8 @@ const editProfileForm = document.querySelector('.popup__form_edit-profile');
 const addElementForm = document.querySelector('.popup__form_add-element');
 const nameInput = document.querySelector('.popup__input_info_name');
 const aboutInput = document.querySelector('.popup__input_info_about');
+const elementNameInput = document.querySelector('.popup__input_element_name');
+const elementLinkInput = document.querySelector('.popup__input_element_link');
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
 
@@ -42,15 +44,14 @@ popupAddElement.addEventListener('click', function (evt) {
 });
 
 //обработчик формы редактирования профиля
-function formSubmitHandler (evt) {
+function editProfileFormSubmitHandler (evt) {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileAbout.textContent = aboutInput.value;
     popupClose(popupEditProfile);
 }
 
-editProfileForm.addEventListener('submit', formSubmitHandler);
-
+editProfileForm.addEventListener('submit', editProfileFormSubmitHandler);
 
 // карточки из коробки
 const elementsList = [
@@ -84,34 +85,39 @@ const elementsList = [
 const elements = document.querySelector('.elements');
 const elementTemplate = document.querySelector('#element').content;
 
+const likeButtonHandler = (evt) => {
+  evt.target.closest('.element__like-button').classList.toggle('element__like-button_type_active');
+}
+
 const generateElement = (elementData) => {
   const newElement = elementTemplate.cloneNode(true);
 
   newElement.querySelector('.element__image').src = elementData.link;
   newElement.querySelector('.element__name').textContent = elementData.name;
 
+  const likeButton = newElement.querySelector('.element__like-button');
+  likeButton.addEventListener('click', likeButtonHandler);
+
   return newElement;
 }
 
 //обработчик формы добавления элемента
+const addElementFormSubmitHandler = (evt) => {
+  evt.preventDefault();
+  renderElement({name: elementNameInput.value, link: elementLinkInput.value});
+  elementNameInput.value = '';
+  elementLinkInput.value = '';
+  popupClose(popupAddElement);
+};
 
 //отрисовываем элемент на странице
 const renderElement = (elementData) => {
   elements.prepend(generateElement(elementData));
 };
 
- //переделать
+addElementForm.addEventListener('submit', addElementFormSubmitHandler);
 
 elementsList.forEach((elementData) => {
   renderElement(elementData);
 });
-
-
-
-
-
-
-
-
-
 
