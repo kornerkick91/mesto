@@ -1,41 +1,56 @@
-// открытие закрытие попапа
-const editButtonElem = document.querySelector('.profile__edit-button');
-const popupElem = document.querySelector('.popup');
-const popupCloseElem = popupElem.querySelector('.popup__close-button');
-const formElement = document.querySelector('.popup__form');
+const editProfileButton = document.querySelector('.profile__edit-button');
+const addElementButton = document.querySelector('.profile__add-button');
+const popup = document.querySelector('.popup');
+const popupEditProfile = document.querySelector('.popup.popup_edit-profile');
+const popupAddElement = document.querySelector('.popup.popup_add-element');
+const closePopupEditProfile = popupEditProfile.querySelector('.popup__close-button');
+const closePopupAddElement = popupAddElement.querySelector('.popup__close-button');
+const editProfileForm = document.querySelector('.popup__form_edit-profile');
+const addElementForm = document.querySelector('.popup__form_add-element');
 const nameInput = document.querySelector('.popup__input_info_name');
 const aboutInput = document.querySelector('.popup__input_info_about');
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
 
-function popupOpen() {
-  popupElem.classList.add('popup_opened');
+// открытие-закрытие попапа
+function popupOpen(popup) {
+  popup.classList.add('popup_opened');
   nameInput.value = profileName.textContent;
   aboutInput.value = profileAbout.textContent;
 }
 
-function popupClose() {
-  popupElem.classList.remove('popup_opened');
+function popupClose(popup) {
+  popup.classList.remove('popup_opened');
 }
 
-editButtonElem.addEventListener('click', popupOpen);
-popupCloseElem.addEventListener('click', popupClose);
-popupElem.addEventListener('click', function (evt) {
+editProfileButton.addEventListener('click', () => popupOpen(popupEditProfile));
+
+addElementButton.addEventListener('click', () => popupOpen(popupAddElement));
+
+closePopupEditProfile.addEventListener('click', () => popupClose(popupEditProfile));
+popupEditProfile.addEventListener('click', function (evt) {
   if(evt.target === evt.currentTarget) {
-    popupClose();
+    popupClose(popupEditProfile);
   }
 });
 
+closePopupAddElement.addEventListener('click', () => popupClose(popupAddElement));
+popupAddElement.addEventListener('click', function (evt) {
+  if(evt.target === evt.currentTarget) {
+    popupClose(popupAddElement);
+  }
+});
 
-// обработка формы редактирования профиля
+//обработчик формы редактирования профиля
 function formSubmitHandler (evt) {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileAbout.textContent = aboutInput.value;
-    popupClose();
+    popupClose(popupEditProfile);
 }
 
-formElement.addEventListener('submit', formSubmitHandler);
+editProfileForm.addEventListener('submit', formSubmitHandler);
+
 
 // карточки из коробки
 const elementsList = [
@@ -65,6 +80,7 @@ const elementsList = [
   }
 ];
 
+//cоздаем элемент
 const elements = document.querySelector('.elements');
 const elementTemplate = document.querySelector('#element').content;
 
@@ -77,15 +93,18 @@ const generateElement = (elementData) => {
   return newElement;
 }
 
+//обработчик формы добавления элемента
 
+//отрисовываем элемент на странице
 const renderElement = (elementData) => {
   elements.prepend(generateElement(elementData));
 };
 
+ //переделать
+
 elementsList.forEach((elementData) => {
   renderElement(elementData);
 });
-
 
 
 

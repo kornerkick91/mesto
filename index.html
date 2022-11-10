@@ -40,13 +40,24 @@
   <footer class="footer">
     <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
   </footer>
-  <div class="popup">
+  <div class="popup popup_edit-profile">
     <div class="popup__container">
-      <button type="button" class="popup__close-button" aria-label="кнопка 'Закрыть'"></button>
+      <button type="button" class="popup__close-button popup__close-button_edit-profile" aria-label="кнопка 'Закрыть'"></button>
       <h2 class="popup__heading">Редактировать профиль</h2>
-      <form class="popup__form" name="profile-form">
+      <form class="popup__form popup__form_edit-profile" name="profile-form">
         <input type="text" class="popup__input popup__input_info_name" value="Жак-Ив Кусто" name="profile-name" required>
         <input type="text" class="popup__input popup__input_info_about" value="Исследователь океана" name="profile-about" required>
+        <button type="submit" class="popup__save-button">Сохранить</button>
+      </form>
+    </div>
+  </div>
+  <div class="popup popup_add-element">
+    <div class="popup__container">
+      <button type="button" class="popup__close-button popup__close-button_add-element" aria-label="кнопка 'Закрыть'"></button>
+      <h2 class="popup__heading">Новое место</h2>
+      <form class="popup__form popup__form_add-element" name="element-form">
+        <input type="text" class="popup__input popup__input_element_name" value="" name="element-name" required placeholder="Название">
+        <input type="url" class="popup__input popup__input_element_link" value="" name="element-link" required placeholder="Ссылка на картинку">
         <button type="submit" class="popup__save-button">Сохранить</button>
       </form>
     </div>
