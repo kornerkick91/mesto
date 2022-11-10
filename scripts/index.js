@@ -89,6 +89,10 @@ const likeButtonHandler = (evt) => {
   evt.target.closest('.element__like-button').classList.toggle('element__like-button_type_active');
 }
 
+const deleteButtonHandler = (evt) => {
+  evt.target.closest('.element').remove();
+}
+
 const generateElement = (elementData) => {
   const newElement = elementTemplate.cloneNode(true);
 
@@ -97,6 +101,9 @@ const generateElement = (elementData) => {
 
   const likeButton = newElement.querySelector('.element__like-button');
   likeButton.addEventListener('click', likeButtonHandler);
+
+  const deleteButton = newElement.querySelector('.element__delete-button');
+  deleteButton.addEventListener('click', deleteButtonHandler);
 
   return newElement;
 }
