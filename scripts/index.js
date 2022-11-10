@@ -1,12 +1,12 @@
 // открытие закрытие попапа
-let editButtonElem = document.querySelector('.profile__edit-button');
-let popupElem = document.querySelector('.popup');
-let popupCloseElem = popupElem.querySelector('.popup__close-button');
-let formElement = document.querySelector('.popup__form');
-let nameInput = document.querySelector('.popup__input_info_name');
-let aboutInput = document.querySelector('.popup__input_info_about');
-let profileName = document.querySelector('.profile__name');
-let profileAbout = document.querySelector('.profile__about');
+const editButtonElem = document.querySelector('.profile__edit-button');
+const popupElem = document.querySelector('.popup');
+const popupCloseElem = popupElem.querySelector('.popup__close-button');
+const formElement = document.querySelector('.popup__form');
+const nameInput = document.querySelector('.popup__input_info_name');
+const aboutInput = document.querySelector('.popup__input_info_about');
+const profileName = document.querySelector('.profile__name');
+const profileAbout = document.querySelector('.profile__about');
 
 function popupOpen() {
   popupElem.classList.add('popup_opened');
@@ -38,7 +38,7 @@ function formSubmitHandler (evt) {
 formElement.addEventListener('submit', formSubmitHandler);
 
 // карточки из коробки
-const initialCards = [
+const elementsList = [
   {
     name: 'Архыз',
     link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -65,19 +65,26 @@ const initialCards = [
   }
 ];
 
-initialCards.forEach((item) => {
-  const elementTemplate = document.querySelector('#element').content;
-  const elements = document.querySelector('.elements');
-  let elementElement = elementTemplate.querySelector('.element').cloneNode(true);
-  // наполняем содержимым
-  elementElement.querySelector('.element__image').src = item.link;
-  elementElement.querySelector('.element__name').textContent = item.name;
-  // отображаем на странице
-  elements.append(elementElement);
+const elements = document.querySelector('.elements');
+const elementTemplate = document.querySelector('#element').content;
+
+const generateElement = (elementData) => {
+  const newElement = elementTemplate.cloneNode(true);
+
+  newElement.querySelector('.element__image').src = elementData.link;
+  newElement.querySelector('.element__name').textContent = elementData.name;
+
+  return newElement;
+}
+
+
+const renderElement = (elementData) => {
+  elements.prepend(generateElement(elementData));
+};
+
+elementsList.forEach((elementData) => {
+  renderElement(elementData);
 });
-
-
-
 
 
 
