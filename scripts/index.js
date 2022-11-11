@@ -4,6 +4,8 @@ const popup = document.querySelector('.popup');
 const popupEditProfile = document.querySelector('.popup.popup_edit-profile');
 const popupAddElement = document.querySelector('.popup.popup_add-element');
 const popupElementImage = document.querySelector('.popup.popup_element-image');
+const popupImage = document.querySelector('.popup__image');
+const popupImageHeading = document.querySelector('.popup__image-heading');
 const closePopupEditProfile = popupEditProfile.querySelector('.popup__close-button');
 const closePopupAddElement = popupAddElement.querySelector('.popup__close-button');
 const closePopupElementImage = popupElementImage.querySelector('.popup__close-button');
@@ -104,9 +106,17 @@ const deleteButtonHandler = (evt) => {
 
 const generateElement = (elementData) => {
   const newElement = elementTemplate.cloneNode(true);
+  const image = newElement.querySelector('.element__image');
+  const heading = newElement.querySelector('.element__name');
 
-  newElement.querySelector('.element__image').src = elementData.link;
-  newElement.querySelector('.element__name').textContent = elementData.name;
+  image.src = elementData.link;
+  heading.textContent = elementData.name;
+
+  image.addEventListener('click', () => {
+    popupImage.src = image.src;
+    popupImageHeading.textContent = heading.textContent;
+    popupOpen(popupElementImage);
+  });
 
   const likeButton = newElement.querySelector('.element__like-button');
   likeButton.addEventListener('click', likeButtonHandler);
@@ -136,4 +146,3 @@ addElementForm.addEventListener('submit', addElementFormSubmitHandler);
 elementsList.forEach((elementData) => {
   renderElement(elementData);
 });
-
