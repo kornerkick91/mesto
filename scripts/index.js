@@ -19,38 +19,38 @@ const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
 
 // открытие-закрытие попапа
-function popupOpen(popup) {
+function openPopup(popup) {
   popup.classList.add('popup_opened');
   nameInput.value = profileName.textContent;
   aboutInput.value = profileAbout.textContent;
 }
 
-function popupClose(popup) {
+function closePopup(popup) {
   popup.classList.remove('popup_opened');
 }
 
-editProfileButton.addEventListener('click', () => popupOpen(popupEditProfile));
+editProfileButton.addEventListener('click', () => openPopup(popupEditProfile));
 
-addElementButton.addEventListener('click', () => popupOpen(popupAddElement));
+addElementButton.addEventListener('click', () => openPopup(popupAddElement));
 
-closePopupEditProfile.addEventListener('click', () => popupClose(popupEditProfile));
+closePopupEditProfile.addEventListener('click', () => closePopup(popupEditProfile));
 popupEditProfile.addEventListener('click', function (evt) {
   if(evt.target === evt.currentTarget) {
-    popupClose(popupEditProfile);
+    closePopup(popupEditProfile);
   }
 });
 
-closePopupAddElement.addEventListener('click', () => popupClose(popupAddElement));
+closePopupAddElement.addEventListener('click', () => closePopup(popupAddElement));
 popupAddElement.addEventListener('click', function (evt) {
   if(evt.target === evt.currentTarget) {
-    popupClose(popupAddElement);
+    closePopup(popupAddElement);
   }
 });
 
-closePopupElementImage.addEventListener('click', () => popupClose(popupElementImage));
+closePopupElementImage.addEventListener('click', () => closePopup(popupElementImage));
 popupElementImage.addEventListener('click', function (evt) {
   if(evt.target === evt.currentTarget) {
-    popupClose(popupElementImage);
+    closePopup(popupElementImage);
   }
 });
 
@@ -59,7 +59,7 @@ function editProfileFormSubmitHandler (evt) {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileAbout.textContent = aboutInput.value;
-    popupClose(popupEditProfile);
+    closePopup(popupEditProfile);
 }
 
 editProfileForm.addEventListener('submit', editProfileFormSubmitHandler);
@@ -67,28 +67,28 @@ editProfileForm.addEventListener('submit', editProfileFormSubmitHandler);
 // карточки из коробки
 const elementsList = [
   {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    name: 'Варадеро',
+    link: 'https://images.unsplash.com/photo-1529426301869-82f4d98d3d81?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'
   },
   {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    name: 'Калуга',
+    link: 'https://images.unsplash.com/photo-1662325652845-19a3b8324352?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80'
   },
   {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    name: 'Рускеала',
+    link: 'https://images.unsplash.com/photo-1573156667506-115190c68737?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'
   },
   {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    name: 'Минск',
+    link: 'https://images.unsplash.com/photo-1659657320665-0cf58cf8079f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80'
   },
   {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    name: 'Великий Новгород',
+    link: 'https://images.unsplash.com/photo-1600253613497-8a39b8b4a5de?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'
   },
   {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    name: 'Красная Поляна',
+    link: 'https://images.unsplash.com/photo-1604231787570-99263ec7b715?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'
   }
 ];
 
@@ -115,7 +115,7 @@ const generateElement = (elementData) => {
   image.addEventListener('click', () => {
     popupImage.src = image.src;
     popupImageHeading.textContent = heading.textContent;
-    popupOpen(popupElementImage);
+    openPopup(popupElementImage);
   });
 
   const likeButton = newElement.querySelector('.element__like-button');
@@ -133,10 +133,10 @@ const addElementFormSubmitHandler = (evt) => {
   renderElement({name: elementNameInput.value, link: elementLinkInput.value});
   elementNameInput.value = '';
   elementLinkInput.value = '';
-  popupClose(popupAddElement);
+  closePopup(popupAddElement);
 };
 
-//отрисовываем элемент на странице
+//отрисовываем элементы на странице
 const renderElement = (elementData) => {
   elements.prepend(generateElement(elementData));
 };
