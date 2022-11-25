@@ -10,10 +10,10 @@ const closePopupAddElement = popupAddElement.querySelector('.popup__close-button
 const closePopupElementImage = popupElementImage.querySelector('.popup__close-button');
 const formEditProfile = document.querySelector('.popup__form_edit-profile');
 const formAddElement = document.querySelector('.popup__form_add-element');
-const nameInput = document.querySelector('.popup__input_info_name');
-const aboutInput = document.querySelector('.popup__input_info_about');
-const elementNameInput = document.querySelector('.popup__input_element_name');
-const elementLinkInput = document.querySelector('.popup__input_element_link');
+const nameInput = formEditProfile.querySelector('.popup__input_info_name');
+const aboutInput = formEditProfile.querySelector('.popup__input_info_about');
+const elementNameInput = formAddElement.querySelector('.popup__input_element_name');
+const elementLinkInput = formAddElement.querySelector('.popup__input_element_link');
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
 const elements = document.querySelector('.elements');
@@ -25,7 +25,7 @@ function openPopup(popup) {
     if (evt.key === "Escape" || evt.key === "Esc") {
       closePopup(popup);
       document.removeEventListener('keydown', closePopupEsc);
-   }
+    }
   };
   document.addEventListener('keydown', closePopupEsc);
 }
@@ -119,3 +119,6 @@ popupElementImage.addEventListener('click', function (evt) {
     closePopup(popupElementImage);
   }
 });
+
+
+
