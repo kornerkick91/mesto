@@ -21,6 +21,11 @@ const elementTemplate = document.querySelector('#element').content;
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', (evt) => {
+    if (evt.key === "Escape" || evt.key === "Esc") {
+      closePopup(popup);
+   }
+  }, { once: true });
 }
 
 function closePopup(popup) {
@@ -96,7 +101,6 @@ popupEditProfile.addEventListener('click', function (evt) {
     closePopup(popupEditProfile);
   }
 });
-
 
 buttonAddElement.addEventListener('click', () => openPopup(popupAddElement));
 formAddElement.addEventListener('submit', formAddElementSubmitHandler);
