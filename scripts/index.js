@@ -21,11 +21,13 @@ const elementTemplate = document.querySelector('#element').content;
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  document.addEventListener('keydown', (evt) => {
+  function closePopupEsc (evt) {
     if (evt.key === "Escape" || evt.key === "Esc") {
       closePopup(popup);
+      document.removeEventListener('keydown', closePopupEsc);
    }
-  }, { once: true });
+  };
+  document.addEventListener('keydown', closePopupEsc);
 }
 
 function closePopup(popup) {
