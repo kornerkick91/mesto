@@ -50,7 +50,7 @@
         <span class="name-input-error popup__input-error"></span>
         <input id="about-input" type="text" class="popup__input popup__input_info_about" value="Исследователь океана" name="profile-about" required minlength="2" maxlength="200" placeholder="Вид деятельности">
         <span class="about-input-error popup__input-error"></span>
-        <button type="submit" class="popup__save-button">Сохранить</button>
+        <button type="submit" class="popup__save-button" disabled>Сохранить</button>
       </form>
     </div>
   </div>
@@ -59,9 +59,11 @@
       <button type="button" class="popup__close-button" aria-label="кнопка 'Закрыть'"></button>
       <h2 class="popup__heading">Новое место</h2>
       <form class="popup__form popup__form_add-element" name="element-form">
-        <input type="text" class="popup__input popup__input_element_name" value="" name="element-name" required placeholder="Название">
-        <input type="url" class="popup__input popup__input_element_link" value="" name="element-link" required placeholder="Ссылка на картинку">
-        <button type="submit" class="popup__save-button">Сохранить</button>
+        <input id="element-name-input" type="text" class="popup__input popup__input_element_name" value="" name="element-name" required minlength="2" maxlength="30" placeholder="Название">
+        <span class="element-name-input-error popup__input-error"></span>
+        <input id="element-link-input" type="url" class="popup__input popup__input_element_link" value="" name="element-link" required placeholder="Ссылка на картинку">
+        <span class="element-link-input-error popup__input-error"></span>
+        <button type="submit" class="popup__save-button" disabled>Сохранить</button>
       </form>
     </div>
   </div>

@@ -8,3 +8,13 @@
   opacity: 0;
   transition: opacity .1s linear;
 }
+
+.popup__input-error:last-of-type {
+  min-height: 42px;
+}
+
+@media screen and (max-width: 620px) {
+  .popup__input-error:last-of-type {
+    min-height: 39px;
+  }
+}
