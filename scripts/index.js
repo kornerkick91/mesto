@@ -24,6 +24,7 @@ function openPopup(popup) {
   function closePopupEsc (evt) {
     if (evt.key === "Escape" || evt.key === "Esc") {
       closePopup(popup);
+      formAddElement.reset();
       document.removeEventListener('keydown', closePopupEsc);
     }
   };
@@ -106,10 +107,14 @@ popupEditProfile.addEventListener('click', function (evt) {
 
 buttonAddElement.addEventListener('click', () => openPopup(popupAddElement));
 formAddElement.addEventListener('submit', formAddElementSubmitHandler);
-closePopupAddElement.addEventListener('click', () => closePopup(popupAddElement));
+closePopupAddElement.addEventListener('click', () => {
+  closePopup(popupAddElement);
+  formAddElement.reset();
+});
 popupAddElement.addEventListener('click', function (evt) {
   if(evt.target === evt.currentTarget) {
     closePopup(popupAddElement);
+    formAddElement.reset();
   }
 });
 
