@@ -20,6 +20,16 @@ const checkInputValidity = (formElement, inputElement, inputErrorClass, errorCla
   }
 };
 
+function resetValidation(popup) {
+  const formElement = popup.querySelector('.popup__form');
+  const inputList = formElement.querySelectorAll('.popup__input');
+  const buttonElement = popup.querySelector('.popup__save-button');
+  inputList.forEach(inputElement => {
+    hideInputError(formElement, inputElement, 'popup__input_type_error', 'popup__input-error_active')
+  });
+  toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+}
+
 const hasInvalidInput = (inputList) => {
   return inputList.some((inputElement) => {
   return !inputElement.validity.valid;

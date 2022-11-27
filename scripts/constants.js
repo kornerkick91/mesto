@@ -26,6 +26,7 @@ const elementsList = [
   }
 ];
 
+// настройки валидации
 const validationConfig = {
   formSelector: '.popup__form',
   inputSelector: '.popup__input',
