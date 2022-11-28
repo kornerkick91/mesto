@@ -27,7 +27,8 @@ function resetValidation(popup) {
   inputList.forEach(inputElement => {
     hideInputError(formElement, inputElement, 'popup__input_type_error', 'popup__input-error_active')
   });
-  toggleButtonState(inputList, buttonElement, inactiveButtonClass);
+  buttonElement.setAttribute('disabled', '');
+  buttonElement.classList.add('popup__save-button_disabled');
 }
 
 const hasInvalidInput = (inputList) => {

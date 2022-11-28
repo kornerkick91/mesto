@@ -1,3 +1,4 @@
+const popups = document.querySelectorAll('.popup');
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const buttonAddElement = document.querySelector('.profile__add-button');
 const popupEditProfile = document.querySelector('.popup_edit-profile');
@@ -5,9 +6,6 @@ const popupAddElement = document.querySelector('.popup_add-element');
 const popupElementImage = document.querySelector('.popup_element-image');
 const popupImage = document.querySelector('.popup__image');
 const popupImageHeading = document.querySelector('.popup__image-heading');
-const closePopupEditProfile = popupEditProfile.querySelector('.popup__close-button');
-const closePopupAddElement = popupAddElement.querySelector('.popup__close-button');
-const closePopupElementImage = popupElementImage.querySelector('.popup__close-button');
 const formEditProfile = document.querySelector('.popup__form_edit-profile');
 const formAddElement = document.querySelector('.popup__form_add-element');
 const nameInput = formEditProfile.querySelector('.popup__input_info_name');
@@ -23,14 +21,11 @@ function closePopupEsc (evt) {
   if (evt.key === "Escape" || evt.key === "Esc") {
     const popup = document.querySelector('.popup_opened');
     closePopup(popup);
-    formAddElement.reset();
-    resetValidation(popup);
   }
 };
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
-  enableValidation(validationConfig);
   document.addEventListener('keydown', closePopupEsc);
 }
 
@@ -39,44 +34,40 @@ function closePopup(popup) {
   document.removeEventListener('keydown', closePopupEsc);
 }
 
-function buttonEditProfileHandler () {
+function handleButtonEditProfile () {
   nameInput.value = profileName.textContent;
   aboutInput.value = profileAbout.textContent;
   openPopup(popupEditProfile);
+  resetValidation(popupEditProfile);
 }
 
-function formEditProfileSubmitHandler (evt) {
+function handleFormEditProfileSubmit (evt) {
   evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileAbout.textContent = aboutInput.value;
   closePopup(popupEditProfile);
 }
 
-function closePopupEditProfileHandler () {
-  closePopup(popupEditProfile);
-  resetValidation(popupEditProfile);
+function handleButtonAddElement () {
+  openPopup(popupAddElement);
+  formAddElement.reset();
+  resetValidation(popupAddElement);
 }
 
-const likeButtonHandler = (evt) => {
+const handleLikeButton = (evt) => {
   evt.target.closest('.element__like-button').classList.toggle('element__like-button_type_active');
 }
 
-const deleteButtonHandler = (evt) => {
+const handleDeleteButton = (evt) => {
   evt.target.closest('.element').remove();
 }
 
-const formAddElementSubmitHandler = (evt) => {
+const handleFormAddElementSubmit = (evt) => {
   evt.preventDefault();
   renderElement({name: elementNameInput.value, link: elementLinkInput.value});
   evt.target.reset();
   closePopup(popupAddElement);
 };
-
-function closePopupAddElementHandler () {
-  closePopup(popupAddElement);
-  formAddElement.reset();
-  resetValidation(popupAddElement);
-}
 
 const generateElement = (elementData) => {
   const newElement = elementTemplate.cloneNode(true);
@@ -95,10 +86,10 @@ const generateElement = (elementData) => {
   });
 
   const likeButton = newElement.querySelector('.element__like-button');
-  likeButton.addEventListener('click', likeButtonHandler);
+  likeButton.addEventListener('click', handleLikeButton);
 
   const deleteButton = newElement.querySelector('.element__delete-button');
-  deleteButton.addEventListener('click', deleteButtonHandler);
+  deleteButton.addEventListener('click', handleDeleteButton);
 
   return newElement;
 }
@@ -111,27 +102,19 @@ elementsList.forEach((elementData) => {
   renderElement(elementData);
 });
 
-buttonEditProfile.addEventListener('click', buttonEditProfileHandler);
-formEditProfile.addEventListener('submit', formEditProfileSubmitHandler);
-closePopupEditProfile.addEventListener('click', () => closePopupEditProfileHandler());
-popupEditProfile.addEventListener('click', function (evt) {
-  if(evt.target === evt.currentTarget) {
-    closePopupEditProfileHandler();
-  }
-});
+buttonEditProfile.addEventListener('click', handleButtonEditProfile);
+formEditProfile.addEventListener('submit', handleFormEditProfileSubmit);
 
-buttonAddElement.addEventListener('click', () => openPopup(popupAddElement));
-formAddElement.addEventListener('submit', formAddElementSubmitHandler);
-closePopupAddElement.addEventListener('click', () => closePopupAddElementHandler());
-popupAddElement.addEventListener('click', function (evt) {
-  if(evt.target === evt.currentTarget) {
-    closePopupAddElementHandler();
-  }
-});
+buttonAddElement.addEventListener('click', handleButtonAddElement);
+formAddElement.addEventListener('submit', handleFormAddElementSubmit);
 
-closePopupElementImage.addEventListener('click', () => closePopup(popupElementImage));
-popupElementImage.addEventListener('click', function (evt) {
-  if(evt.target === evt.currentTarget) {
-    closePopup(popupElementImage);
-  }
-});
+popups.forEach((popup) => {
+  popup.addEventListener('mousedown', (evt) => {
+      if (evt.target.classList.contains('popup_opened')) {
+        closePopup(popup);
+      }
+      if (evt.target.classList.contains('popup__close-button')) {
+        closePopup(popup);
+      }
+  })
+})
