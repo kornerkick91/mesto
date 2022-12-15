@@ -15,7 +15,62 @@ const elementLinkInput = formAddElement.querySelector('.popup__input_element_lin
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
 const elements = document.querySelector('.elements');
-const elementTemplate = document.querySelector('#element').content;
+
+
+
+class Card {
+  constructor(elementsList, elementSelector) {
+    this._name = elementsList.name;
+    this._link = elementsList.link;
+    this._elementTemplate = elementSelector;
+  }
+
+  _getTemplate() {
+    const element = document.querySelector(this._elementTemplate).content.querySelector('.element').cloneNode(true);
+    return element;
+  }
+
+  generateElement() {
+    this._newElement = this._getTemplate();
+    this._newElement.querySelector('.element__image').src = this._link;
+    this._newElement.querySelector('.element__image').alt = this._name;
+    this._newElement.querySelector('.element__name').textContent = this._name;
+    this._likeButton = this._newElement.querySelector('.element__like-button');
+    this._deleteButton = this._newElement.querySelector('.element__delete-button');
+    this._setEventListeners();
+
+    return this._newElement;
+  }
+
+  _setEventListeners() {
+    this._likeButton.addEventListener('click', () => {
+      this._handleLikeButton();
+    });
+    this._deleteButton.addEventListener('click', () => {
+      this._handleDeleteButton();
+    });
+  }
+
+  _handleLikeButton() {
+
+    this._likeButton.classList.toggle('element__like-button_type_active');
+  }
+
+  _handleDeleteButton() {
+
+    this._newElement.remove();
+  }
+}
+
+elementsList.forEach((item) => {
+  const card = new Card(item, '.element-template');
+  const cardElement = card.generateElement();
+  document.querySelector('.elements').prepend(cardElement);
+});
+
+
+
+
 
 function closePopupEsc (evt) {
   if (evt.key === "Escape" || evt.key === "Esc") {
@@ -54,53 +109,20 @@ function handleButtonAddElement () {
   resetValidation(popupAddElement);
 }
 
-const handleLikeButton = (evt) => {
-  evt.target.closest('.element__like-button').classList.toggle('element__like-button_type_active');
-}
-
-const handleDeleteButton = (evt) => {
-  evt.target.closest('.element').remove();
-}
-
 const handleFormAddElementSubmit = (evt) => {
   evt.preventDefault();
-  renderElement({name: elementNameInput.value, link: elementLinkInput.value});
+  generateElement();
   evt.target.reset();
   closePopup(popupAddElement);
 };
 
-const generateElement = (elementData) => {
-  const newElement = elementTemplate.cloneNode(true);
-  const image = newElement.querySelector('.element__image');
-  const heading = newElement.querySelector('.element__name');
 
-  image.src = elementData.link;
-  image.alt = elementData.name;
-  heading.textContent = elementData.name;
 
-  image.addEventListener('click', () => {
-    popupImage.src = image.src;
-    popupImage.alt = image.alt;
-    popupImageHeading.textContent = heading.textContent;
-    openPopup(popupElementImage);
-  });
 
-  const likeButton = newElement.querySelector('.element__like-button');
-  likeButton.addEventListener('click', handleLikeButton);
 
-  const deleteButton = newElement.querySelector('.element__delete-button');
-  deleteButton.addEventListener('click', handleDeleteButton);
 
-  return newElement;
-}
 
-const renderElement = (elementData) => {
-  elements.prepend(generateElement(elementData));
-};
 
-elementsList.forEach((elementData) => {
-  renderElement(elementData);
-});
 
 buttonEditProfile.addEventListener('click', handleButtonEditProfile);
 formEditProfile.addEventListener('submit', handleFormEditProfileSubmit);
@@ -118,3 +140,4 @@ popups.forEach((popup) => {
       }
   })
 })
+
