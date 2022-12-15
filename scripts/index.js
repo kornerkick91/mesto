@@ -56,7 +56,7 @@ function handleButtonAddElement () {
 
 const handleFormAddElementSubmit = (evt) => {
   evt.preventDefault();
-  generateElement();
+  renderElement({name: elementNameInput.value, link: elementLinkInput.value});
   evt.target.reset();
   closePopup(popupAddElement);
 };
@@ -118,20 +118,15 @@ class Card {
   }
 }
 
-elementsList.forEach((item) => {
+const renderElement = (item) => {
   const card = new Card(item, '.element-template');
   const cardElement = card.generateElement();
   document.querySelector('.elements').prepend(cardElement);
+};
+
+elementsList.forEach((item) => {
+  renderElement(item);
 });
-
-
-
-
-
-
-
-
-
 
 
 
