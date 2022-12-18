@@ -1,11 +1,52 @@
+import { Card } from "./Card.js";
+import { FormValidator } from "./FormValidator.js";
+
+// карточки из коробки
+const elementsList = [
+  {
+    name: 'Варадеро',
+    link: 'https://images.unsplash.com/photo-1529426301869-82f4d98d3d81?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'
+  },
+  {
+    name: 'Калуга',
+    link: 'https://images.unsplash.com/photo-1662325652845-19a3b8324352?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80'
+  },
+  {
+    name: 'Рускеала',
+    link: 'https://images.unsplash.com/photo-1573156667506-115190c68737?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'
+  },
+  {
+    name: 'Минск',
+    link: 'https://images.unsplash.com/photo-1659657320665-0cf58cf8079f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80'
+  },
+  {
+    name: 'Великий Новгород',
+    link: 'https://images.unsplash.com/photo-1600253613497-8a39b8b4a5de?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=764&q=80'
+  },
+  {
+    name: 'Красная Поляна',
+    link: 'https://images.unsplash.com/photo-1604231787570-99263ec7b715?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=735&q=80'
+  }
+];
+
+// настройки валидации
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save-button',
+  inactiveButtonClass: 'popup__save-button_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
+};
+
 const popups = document.querySelectorAll('.popup');
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const buttonAddElement = document.querySelector('.profile__add-button');
 const popupEditProfile = document.querySelector('.popup_edit-profile');
 const popupAddElement = document.querySelector('.popup_add-element');
-const popupElementImage = document.querySelector('.popup_element-image');
-const popupImage = document.querySelector('.popup__image');
-const popupImageHeading = document.querySelector('.popup__image-heading');
+export const popupElementImage = document.querySelector('.popup_element-image');
+export const popupImage = document.querySelector('.popup__image');
+export const popupImageHeading = document.querySelector('.popup__image-heading');
 const formEditProfile = document.querySelector('.popup__form_edit-profile');
 const formAddElement = document.querySelector('.popup__form_add-element');
 const nameInput = formEditProfile.querySelector('.popup__input_info_name');
@@ -16,7 +57,6 @@ const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
 const elements = document.querySelector('.elements');
 
-
 function closePopupEsc (evt) {
   if (evt.key === "Escape" || evt.key === "Esc") {
     const popup = document.querySelector('.popup_opened');
@@ -24,7 +64,7 @@ function closePopupEsc (evt) {
   }
 };
 
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupEsc);
 }
@@ -38,7 +78,7 @@ function handleButtonEditProfile () {
   nameInput.value = profileName.textContent;
   aboutInput.value = profileAbout.textContent;
   openPopup(popupEditProfile);
-  resetValidation(popupEditProfile);
+  validatorFormEditProfile.resetValidation();
 }
 
 function handleFormEditProfileSubmit (evt) {
@@ -51,7 +91,7 @@ function handleFormEditProfileSubmit (evt) {
 function handleButtonAddElement () {
   openPopup(popupAddElement);
   formAddElement.reset();
-  resetValidation(popupAddElement);
+  validatorFormAddElement.resetValidation();
 }
 
 const handleFormAddElementSubmit = (evt) => {
@@ -63,72 +103,15 @@ const handleFormAddElementSubmit = (evt) => {
 
 
 
-
-class Card {
-  constructor(elementsList, elementSelector) {
-    this._name = elementsList.name;
-    this._link = elementsList.link;
-    this._elementTemplate = elementSelector;
-  }
-
-  _getTemplate() {
-    const element = document.querySelector(this._elementTemplate).content.querySelector('.element').cloneNode(true);
-    return element;
-  }
-
-  generateElement() {
-    this._newElement = this._getTemplate();
-    this._newElement.querySelector('.element__image').src = this._link;
-    this._newElement.querySelector('.element__image').alt = this._name;
-    this._newElement.querySelector('.element__name').textContent = this._name;
-    this._likeButton = this._newElement.querySelector('.element__like-button');
-    this._deleteButton = this._newElement.querySelector('.element__delete-button');
-    this._image = this._newElement.querySelector('.element__image');
-    this._heading = this._newElement.querySelector('.element__name');
-    this._setEventListeners();
-
-    return this._newElement;
-  }
-
-  _setEventListeners() {
-    this._likeButton.addEventListener('click', () => {
-      this._handleLikeButton();
-    });
-    this._deleteButton.addEventListener('click', () => {
-      this._handleDeleteButton();
-    });
-    this._image.addEventListener('click', () => {
-      this._handleClickImage();
-    });
-  }
-
-  _handleLikeButton() {
-    this._likeButton.classList.toggle('element__like-button_type_active');
-  }
-
-  _handleDeleteButton() {
-    this._newElement.remove();
-  }
-
-  _handleClickImage() {
-    popupImage.src = this._image.src;
-    popupImage.alt = this._image.alt;
-    popupImageHeading.textContent = this._heading.textContent;
-    openPopup(popupElementImage);
-  }
-}
-
 const renderElement = (item) => {
   const card = new Card(item, '.element-template');
   const cardElement = card.generateElement();
-  document.querySelector('.elements').prepend(cardElement);
+  elements.prepend(cardElement);
 };
 
 elementsList.forEach((item) => {
   renderElement(item);
 });
-
-
 
 
 
@@ -148,4 +131,15 @@ popups.forEach((popup) => {
       }
   })
 })
+
+
+
+const validatorFormEditProfile = new FormValidator(validationConfig, formEditProfile);
+validatorFormEditProfile.enableValidation();
+
+const validatorFormAddElement = new FormValidator(validationConfig, formAddElement);
+validatorFormAddElement.enableValidation();
+
+
+
 
