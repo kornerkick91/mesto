@@ -6,9 +6,6 @@ import {
   buttonAddElement,
   popupEditProfile,
   popupAddElement,
-  popupElementImage,
-  popupImage,
-  popupImageHeading,
   formEditProfile,
   formAddElement,
   nameInput,
@@ -34,7 +31,7 @@ function closePopupEsc (evt) {
   }
 };
 
-export function openPopup(popup) {
+function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupEsc);
 }
@@ -72,9 +69,8 @@ const handleFormAddElementSubmit = (evt) => {
 };
 
 
-
 const renderElement = (item) => {
-  const card = new Card(item, '.element-template');
+  const card = new Card(item, '#element-template', openPopup);
   const cardElement = card.generateElement();
   elements.prepend(cardElement);
 };
@@ -103,8 +99,6 @@ popups.forEach((popup) => {
 
 
 validatorFormEditProfile.enableValidation();
-
-
 validatorFormAddElement.enableValidation();
 
 
