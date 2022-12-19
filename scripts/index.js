@@ -39,6 +39,7 @@ const validationConfig = {
   errorClass: 'popup__input-error_active'
 };
 
+
 const popups = document.querySelectorAll('.popup');
 const buttonEditProfile = document.querySelector('.profile__edit-button');
 const buttonAddElement = document.querySelector('.profile__add-button');
@@ -56,6 +57,10 @@ const elementLinkInput = formAddElement.querySelector('.popup__input_element_lin
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
 const elements = document.querySelector('.elements');
+
+const validatorFormEditProfile = new FormValidator(validationConfig, formEditProfile);
+const validatorFormAddElement = new FormValidator(validationConfig, formAddElement);
+
 
 function closePopupEsc (evt) {
   if (evt.key === "Escape" || evt.key === "Esc") {
@@ -114,7 +119,6 @@ elementsList.forEach((item) => {
 });
 
 
-
 buttonEditProfile.addEventListener('click', handleButtonEditProfile);
 formEditProfile.addEventListener('submit', handleFormEditProfileSubmit);
 
@@ -133,12 +137,11 @@ popups.forEach((popup) => {
 })
 
 
-
-const validatorFormEditProfile = new FormValidator(validationConfig, formEditProfile);
 validatorFormEditProfile.enableValidation();
 
-const validatorFormAddElement = new FormValidator(validationConfig, formAddElement);
+
 validatorFormAddElement.enableValidation();
+
 
 
 

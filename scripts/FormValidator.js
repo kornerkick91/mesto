@@ -10,10 +10,9 @@ export class FormValidator {
     this._errorClass = validationConfig.errorClass;
   }
 
-  _showInputError(inputElement, errorMessage) {
-    this._errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
+  _showInputError(inputElement) {
     inputElement.classList.add(this._inputErrorClass);
-    this._errorElement.textContent = errorMessage;
+    this._errorElement.textContent = inputElement.validationMessage;
     this._errorElement.classList.add(this._errorClass);
   };
 
@@ -24,8 +23,9 @@ export class FormValidator {
   };
 
   _checkInputValidity(inputElement) {
+    this._errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
     if (!inputElement.validity.valid) {
-      this._showInputError(inputElement, inputElement.validationMessage);
+      this._showInputError(inputElement);
     } else {
       this._hideInputError(inputElement);
     }
@@ -35,6 +35,7 @@ export class FormValidator {
     this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
     this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
     this._inputList.forEach((inputElement) => {
+      this._errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
       this._hideInputError(inputElement)
     });
     this._buttonElement.setAttribute('disabled', '');
@@ -42,9 +43,7 @@ export class FormValidator {
   }
 
   _hasInvalidInput() {
-    return this._inputList.some((inputElement) => {
-      return !inputElement.validity.valid;
-      });
+    return this._inputList.some((inputElement) => !inputElement.validity.valid);
   }
 
   _toggleButtonState() {
@@ -58,6 +57,8 @@ export class FormValidator {
   }
 
   _setEventListeners() {
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    this._buttonElement = this._formElement.querySelector(this._submitButtonSelector);
     this._toggleButtonState();
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
