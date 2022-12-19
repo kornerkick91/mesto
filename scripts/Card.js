@@ -1,6 +1,4 @@
-import { popupElementImage, popupImage, popupImageHeading, openPopup } from "./index.js";
-
-export class Card {
+export default class Card {
   constructor(elementsList, elementSelector) {
     this._name = elementsList.name;
     this._link = elementsList.link;
