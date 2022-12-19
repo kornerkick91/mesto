@@ -18,6 +18,7 @@
 * FIGMA
 * JavaScript
 * template-теги
+* ООП
 
 ### Сcылка на GitHub Pages
 [https://kornerkick91.github.io/mesto/]

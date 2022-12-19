@@ -1,6 +1,6 @@
+import { elementsList, validationConfig } from "./constants.js";
+
 import {
-  elementsList,
-  validationConfig,
   popups,
   buttonEditProfile,
   buttonAddElement,
@@ -15,7 +15,7 @@ import {
   profileName,
   profileAbout,
   elements
-} from "./constants.js";
+} from "./elements.js";
 
 import Card from "./Card.js";
 import FormValidator from "./FormValidator.js";
@@ -64,7 +64,6 @@ function handleButtonAddElement () {
 const handleFormAddElementSubmit = (evt) => {
   evt.preventDefault();
   renderElement({name: elementNameInput.value, link: elementLinkInput.value});
-  evt.target.reset();
   closePopup(popupAddElement);
 };
 
@@ -75,9 +74,7 @@ const renderElement = (item) => {
   elements.prepend(cardElement);
 };
 
-elementsList.forEach((item) => {
-  renderElement(item);
-});
+elementsList.forEach(renderElement);
 
 
 buttonEditProfile.addEventListener('click', handleButtonEditProfile);
@@ -88,20 +85,12 @@ formAddElement.addEventListener('submit', handleFormAddElementSubmit);
 
 popups.forEach((popup) => {
   popup.addEventListener('mousedown', (evt) => {
-      if (evt.target.classList.contains('popup_opened')) {
+      if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__close-button')) {
         closePopup(popup);
       }
-      if (evt.target.classList.contains('popup__close-button')) {
-        closePopup(popup);
-      }
-  })
-})
+  });
+});
 
 
 validatorFormEditProfile.enableValidation();
 validatorFormAddElement.enableValidation();
-
-
-
-
-
