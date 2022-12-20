@@ -6,6 +6,9 @@ import {
   buttonAddElement,
   popupEditProfile,
   popupAddElement,
+  popupElementImage,
+  popupImage,
+  popupImageHeading,
   formEditProfile,
   formAddElement,
   nameInput,
@@ -67,9 +70,16 @@ const handleFormAddElementSubmit = (evt) => {
   closePopup(popupAddElement);
 };
 
+function handleClickImage(name, link) {
+  popupImage.src = link;
+  popupImage.alt = name;
+  popupImageHeading.textContent = name;
+  openPopup(popupElementImage);
+}
+
 
 const renderElement = (item) => {
-  const card = new Card(item, '#element-template', openPopup);
+  const card = new Card(item, '#element-template', handleClickImage);
   const cardElement = card.generateElement();
   elements.prepend(cardElement);
 };
